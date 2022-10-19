@@ -21,10 +21,9 @@ import { getRecipes, banRecipeById } from '../../../redux/actions/adminAction';
 
 export const RecipeTable = () => {
 
-const dispatch = useDispatch()
-
-const {recipesList} = useSelector((store) => store.admin)
-
+  const {recipesList} = useSelector((store) => store.admin)
+  
+  const dispatch = useDispatch()
 
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
@@ -32,12 +31,19 @@ const {recipesList} = useSelector((store) => store.admin)
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [recipesPerPage, setrecipesPerPage] = React.useState(15);
+    const [click, setClick] = React.useState(false)
 
 
     React.useEffect(()=>{
       dispatch(getRecipes())
-    },[])
+    },[click])
+
+
+    React.useEffect(() => {
+      dispatch(getRecipes())
+    }, [])
   
+
     const handleRequestSort = (event, property) => {
       const isAsc = orderBy === property && order === 'asc';
       setOrder(isAsc ? 'desc' : 'asc');
@@ -86,10 +92,21 @@ const {recipesList} = useSelector((store) => store.admin)
     const handleChangeDense = (event) => {
       setDense(event.target.checked);
     };
+
+    const handleClick2 = (event, recipe, estado) => {
+      console.log(event.target.checked, "ESTE ES EL EVENT")
+      console.log(recipe, "ESTE ES RECIPE ID")
+      console.log(estado, "ESTE ES EL ESTADO")
+      click ? setClick(false) : setClick(true)
+      dispatch(banRecipeById(recipe,event.target.checked))
+      dispatch(getRecipes())
+    }
   
-    const isSelected = (name) => selected.indexOf(name) !== -1;
+    const isSelected = (id) => { 
+      let receta = recipesList.find((recipe) => recipe.id === id)
+      return receta.banned
+    }
   
-    // Avoid a layout jump when reaching the last page with empty recipe.
     const emptyrecipes =
       page > 0 ? Math.max(0, (1 + page) * recipesPerPage - recipesList.length) : 0;
   
@@ -97,7 +114,7 @@ const {recipesList} = useSelector((store) => store.admin)
       <NavBar/>
       <Box sx={{ width: '100%' }}>
         <Paper sx={{ width: '100%', mb: 2 }}>
-          <EnhancedRecipesTableToolbar numSelected={selected.length} />  {/*ACA TENGO QUE VER COMO LE PASO EL ID PARA BANEARLO*/}
+          <EnhancedRecipesTableToolbar numSelected={selected.length} /> 
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
@@ -113,12 +130,10 @@ const {recipesList} = useSelector((store) => store.admin)
                 rowCount={recipesList.length}
               />
               <TableBody>
-                {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                   recipe.slice().sort(getComparator(order, orderBy)) */}
                 {stableSort(recipesList, getComparator(order, orderBy))
                   .slice(page * recipesPerPage, page * recipesPerPage + recipesPerPage)
                   .map((row, index) => {
-                    const isItemSelected = isSelected(row.name);
+                    const isItemSelected = isSelected(row.id);
                     const labelId = `enhanced-table-checkbox-${index}`;
   
                     return (
@@ -133,6 +148,7 @@ const {recipesList} = useSelector((store) => store.admin)
                       >
                         <TableCell padding="checkbox">
                           <Checkbox
+                            onChange={(event) => handleClick2(event, row.id, isItemSelected)}
                             color="primary"
                             checked={isItemSelected}
                             inputProps={{
@@ -151,7 +167,6 @@ const {recipesList} = useSelector((store) => store.admin)
                         <TableCell align="left">{row.name}</TableCell>
                         <TableCell align="left">{row.healthScore}</TableCell>
                         <TableCell align="left">{row.createdInDB.toString()}</TableCell>
-                        {console.log(row.banned, "BANNED")}
                         <TableCell align="left">{row.banned.toString()}</TableCell>
                         {/* <TableCell align="left">{row.user_id}</TableCell> */}
   
