@@ -4,6 +4,15 @@ import { useState } from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import swal from 'sweetalert';
 import { addCalculator } from '../../../redux/actions/useractions';
+import flaquito from "./images/flaquito.png"
+import gordito from "./images/gordito.png"
+import gordo from "./images/gordo.png"
+import normal from "./images/normal.png" //entre comillas
+import rellenito from "./images/rellenito.png"
+import status from "./images/status.png"
+import {NavBar} from "../nav/nav"
+
+
 
 
 export const CalculatorIMC= ()=>{
@@ -12,6 +21,7 @@ export const CalculatorIMC= ()=>{
 
   const [peso, setPeso] = useState("");
   const [altura, setAltura] = useState("");
+  const [imgEjemplo, setImgEjemplo] = useState(status)
 
   const user = window.sessionStorage.getItem("user")
   let userLogged
@@ -25,47 +35,60 @@ export const CalculatorIMC= ()=>{
 
   function calcularIMC (){
 
+
     const alt = altura / 100; 
     const imc = peso / (alt * alt);
 
     if(altura === "" && peso === ""){
-      swal("Debes insertar ambos datos, Peso y Altura");
-    }else if(!alt){
-      swal("Por favor, rellene el peso y la altura correctamente !");
+      swal("Please insert your weight and height");
+    }
+    else if (isNaN(altura) && isNaN(peso)) {
+      swal('You must enter the data correctly');
+    }
+    else if(!alt){
+      swal("You must enter only numbers !");
         
     }else if (imc < 16.9){
-     setMensagem(`Estas muy bajo de peso!`);
-     setEfeitos(`Efectos secundarios: pérdida de cabello, infertilidad, períodos menstruales perdidos.`);
-     setImcMessage(`Su IMC : ${imc.toFixed(2)}`);
+     setMensagem(`You are very underweight!`);
+     setEfeitos(`Side effects: hair loss, infertility, missed menstrual periods.`);
+     setImcMessage(`Your IBM is : ${imc.toFixed(2)}`);
+     setImgEjemplo(flaquito)
+
      
    }else if(imc >= 17 && imc < 18.4){
-    setMensagem(`Estas bajo de peso !`);
-    setEfeitos(`Efectos secundarios: fatiga, estrés, ansiedad.`);
-    setImcMessage(`Su IMC es: ${imc.toFixed(2)}`);
+    setMensagem(`you are underweight !`);
+    setEfeitos(`Side effects: fatigue, stress, anxiety.`);
+    setImcMessage(`Your BMI is: ${imc.toFixed(2)}`);
+    setImgEjemplo(flaquito)
      
    }else if (imc >= 18.5 && imc < 24.9){
-    setMensagem(`Eres de peso normal !`);
-    setEfeitos(`Efectos secundarios: menor riesgo de enfermedades cardíacas y vasculares.`);
-    setImcMessage(`Su IMC es: ${imc.toFixed(2)}`);
+    setMensagem(`You are normal weight !`);
+    setEfeitos(`Side effects: lower risk of heart and vascular diseases.`);
+    setImcMessage(`Your BMI is: ${imc.toFixed(2)}`);
+    setImgEjemplo(normal)
     
    }else if(imc >= 25 && imc < 29.9){
-    setMensagem(`¿Tienes sobrepeso? !`);
-    setEfeitos(`Efectos secundarios: menor riesgo de enfermedades cardíacas y vasculares.`);
-    setImcMessage(`Su IMC es: ${imc.toFixed(2)}`);
+    setMensagem(`Are you overweight? !`);
+    setEfeitos(`Side effects: lower risk of heart and vascular diseases.`);
+    setImcMessage(`Your BMI is: ${imc.toFixed(2)}`);
+    setImgEjemplo(rellenito)
      
    }else if(imc >= 30 && imc < 34.9){
-    setMensagem(`Tienes Obesidad Grado I!`);
-    setEfeitos(`Efectos secundarios: apnea del sueño, dificultad para respirar.`);
-    setImcMessage(`Su IMC es: ${imc.toFixed(2)}`);
+    setMensagem(`You have Obesity Grade I!`);
+    setEfeitos(`Side effects: sleep apnea, shortness of breath.`);
+    setImcMessage(`Your BMI is: ${imc.toFixed(2)}`);
+    setImgEjemplo(gordito)
 
    }else if(imc >= 35 && imc < 40){
-    setMensagem(`Tienes Obesidad Grado II!`);
-    setEfeitos(`Efectos secundarios: diabetes, angina de pecho, infarto de miocardio, aterosclerosis`);
-    setImcMessage(`Su IMC es: ${imc.toFixed(2)}`);
+    setMensagem(`You have Obesity Grade II!`);
+    setEfeitos(`Side effects: diabetes, angina pectoris, myocardial infarction, atherosclerosis`);
+    setImcMessage(`Your BMI is: ${imc.toFixed(2)}`);
+    setImgEjemplo(gordo)
    }else if(imc >= 40){
-    setMensagem(`Tienes Obesidad Grado III !`);
-    setEfeitos(`Efectos secundarios: reflujo, dificultad para moverse, úlceras de decúbito, diabetes, ataque cardíaco, accidente cerebrovascular.`);
-    setImcMessage(`Su IMC es: ${imc.toFixed(2)}`);
+    setMensagem(`You have Grade III Obesity !`);
+    setEfeitos(`Side effects: reflux, difficulty moving, bedsores, diabetes, heart attack, stroke.`);
+    setImcMessage(`Your BMI is: ${imc.toFixed(2)}`);
+    setImgEjemplo(gordo)
    }
     
   }
@@ -84,15 +107,17 @@ export const CalculatorIMC= ()=>{
 
     
   return(
+    <div>
+      <NavBar/>
     <div className='IMC'>
    <div className="imc-calculator">
       <div className="area-input-calculator">
-      <h1>Calculadora de IMC</h1>
-      <span>Vamos Calcular su IMC ?</span>
+      <h1>BMI calculator</h1>
+      <span>Let's Calculate your BMI ?</span>
           <input 
             className='form-control'
             type="text"
-            placeholder="Peso en KG Ej: 75"
+            placeholder="Weight in KG Ex: 75"
             value={peso}
             onChange={ (e) => setPeso(e.target.value) }
           />
@@ -100,15 +125,15 @@ export const CalculatorIMC= ()=>{
           <input 
             className='form-control'
             type="text"
-            placeholder="Altura en CM Ej: 170"
+            placeholder="Height in CM Ex: 170"
             value={altura}
             onChange={ (e) => setAltura(e.target.value) }
           />
 
           <button className="btn btn-primary" onClick={calcularIMC}> 
-            Calcular
+            Calculate
           </button>
-
+          <div className='messagesImc'>
             <h2>
                 {mensagem} <br/>
                 {efeitos} <br/>
@@ -117,14 +142,17 @@ export const CalculatorIMC= ()=>{
             <h3>
             {imcMessage}
             </h3>
+            </div>
       </div>
+      <img className='imgRef' src={imgEjemplo}></img>
       <div>
         
       </div>
-      <button className="btn-secondary" disabled={imcMessage.length === 0} onClick={handleCalculator} >Save in profile</button>
-      <a className="btn btn-primary" href='/me'>Go to Profile!</a>
+      <button className="btn btn-secondary" disabled={imcMessage.length === 0 || peso.length === 0 || altura.length === 0} onClick={handleCalculator} >Save </button>
+      <a className="btn btn-primary" href='/me'>GoToProfile!</a>
    </div>
    
+   </div>
    </div>
   );
 }

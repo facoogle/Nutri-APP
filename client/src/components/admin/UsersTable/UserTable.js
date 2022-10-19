@@ -23,7 +23,9 @@ export const UserTable = () => {
 
 const {usersList} = useSelector((store) => store.admin)
 
+
     const dispatch = useDispatch()
+
 
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
@@ -31,12 +33,16 @@ const {usersList} = useSelector((store) => store.admin)
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [userPerPage, setuserPerPage] = React.useState(15);
-    const [banned, setBanned] = React.useState(false)
+    const [click, setClick] = React.useState(false)
 
+    React.useEffect(() => {
+      dispatch(getUsers())
+    },[click])
+    
 
     React.useEffect(()=>{
       dispatch(getUsers())
-    },[banned])
+    },[])
   
     const handleRequestSort = (event, property) => {
       const isAsc = orderBy === property && order === 'asc';
@@ -87,16 +93,19 @@ const {usersList} = useSelector((store) => store.admin)
       setDense(event.target.checked);
     };
 
-    const handleClick2 = (event, user, estado) => {   //ESTO ES PARA BANEAR
-      
+    const handleClick2 = (event, user, estado) => {
+      console.log(event.target.checked, "ESTE ES EL EVENT")
       console.log(user, "ESTE ES USER ID")
       console.log(estado, "ESTE ES EL ESTADO")
-      dispatch(banUserById(user,estado))
-      if(banned === true) setBanned(false)
-      else setBanned(true)
+      click ? setClick(false) : setClick(true)
+      dispatch(banUserById(user,event.target.checked))
+      dispatch(getUsers())
     }
   
-    const isSelected = (name) => selected.indexOf(name) !== -1;
+    const isSelected = (id) => { 
+      let usuario = usersList.find((user) => user.id === id)
+      return usuario.banned
+    }
   
     const emptyuser =
       page > 0 ? Math.max(0, (1 + page) * userPerPage - usersList.length) : 0;
@@ -105,7 +114,7 @@ const {usersList} = useSelector((store) => store.admin)
       <NavBar />
       <Box sx={{ width: '100%' }}>
         <Paper sx={{ width: '100%', mb: 2 }}>
-          <EnhancedUsersTableToolbar numSelected={selected.length} />  {/*ACA TENGO QUE VER COMO LE PASO EL ID PARA BANEARLO*/}
+          <EnhancedUsersTableToolbar numSelected={selected.length} />  
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
@@ -124,7 +133,7 @@ const {usersList} = useSelector((store) => store.admin)
                 {stableSort(usersList, getComparator(order, orderBy))
                   .slice(page * userPerPage, page * userPerPage + userPerPage)
                   .map((row, index) => {
-                    const isItemSelected = isSelected(row.username);
+                    const isItemSelected = isSelected(row.id);
                     const labelId = `enhanced-table-checkbox-${index}`;
                     
                     return (
