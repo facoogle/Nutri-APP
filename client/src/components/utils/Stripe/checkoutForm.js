@@ -102,7 +102,7 @@ export function PaymentForm() {
       </div>   
       <h1>BE PREMIUM NOW!</h1>
       {
-        loader === false ? <Spinner/> : <></>
+        loader === false ? <Spinner className='spinner'/> : <></>
       }
       <div className='cardContainer'>
         <div >
