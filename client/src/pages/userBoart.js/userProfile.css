@@ -1,4 +1,7 @@
 
+
+
+
  .profileprincipal {
     display: grid; 
     grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%; 
@@ -33,6 +36,7 @@ margin-left: 10%;
  .userimage {
     margin-top: 40%;
  grid-area: userimage;
+
 }
 
 .upload1 { 
@@ -70,12 +74,18 @@ margin-left: 10%;
 
 
 .userinformation { 
-    margin-top: 10%;
-    margin-left: 10%;
+    margin-top: 30%;
+    margin-left: 13%;
     grid-area: userinformation; 
     padding: 1em; 
-    background: #f9f9f9;
+    background:  #f0f0f0;
     border: 1px solid #c1c1c1; 
+    height: 110%;
+    border-radius: 4%;
+}
+
+.modifyibmbtn {
+    margin-left: 30%;
 }
 
  .userimage1 {
@@ -92,13 +102,16 @@ margin-left: 10%;
     grid-area: selectyourlist;
     margin-right: 10%;
     padding: 3em;
+    margin-top: 42%;
  }
 
  .mylists { 
     grid-area: mylists; 
+    margin-top: 52%;
 }
 
 .yourpost { 
+    margin-top: 30%;
     padding: 3em;
     grid-area: yourpost;
  }
@@ -147,3 +160,10 @@ margin-left: 10%;
     box-shadow: 4px 4px 12px #c5c5c5,
                 -4px -4px 12px #ffffff;
    } */
+
+
+
+
+
+
+
