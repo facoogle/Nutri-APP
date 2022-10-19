@@ -24,6 +24,7 @@ router.get('/allfavlist/:id', auth, async (req, res)=>{
 router.post('/lists/:listId', auth, async (req, res)=>{
     let {listId} = req.params
     let {recipeId} = req.body
+    console.log('listId',listId,'recipeId',recipeId)
     let favRecipe = await addingRecipe(listId , recipeId)
     res.json(favRecipe)
 })

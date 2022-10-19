@@ -9,7 +9,9 @@ export const userSlice = createSlice({
     userPost: [],
     post:{},
     ranking:0,
-    profile:[]
+    profile:[],
+    recipesN:[],
+    nutri:{},
   },
   reducers: {
     getUser: (state, action) => {
@@ -49,7 +51,12 @@ export const userSlice = createSlice({
     getProfile:(state, action) => {
       state.profile = action.payload;
     },
-
+    getNutriRecipes:(state, action) => {
+      state.recipesN = action.payload;
+    },
+    getNutri:(state, action) => {
+      state.nutri = action.payload;
+    },
     // getUserStatus: (state, action)=>{
     //     state.logged = action.payload
     // },
@@ -77,7 +84,10 @@ export const {
   createUser,
   deleteUser,
   getRanking,
-  getProfile
+  getProfile,
+  getNutriRecipes,
+  getNutri,
+  getNutriP
 } = userSlice.actions;
 
 export default userSlice.reducer;
