@@ -1,4 +1,5 @@
 import React from 'react'
+import './nutri.css'
 
 
 const RecipeCreated = ({recipes}) => {
