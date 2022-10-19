@@ -8,10 +8,11 @@
 
 .postcoment {
     border-radius: 3%;
+    margin-left: 3%;
     margin-right: 30%;
     margin-bottom: 1%;
     padding: 0.6em; 
-    background: #f9f9f9;
+    background: #f0f0f0;
     border: 1px solid #c1c1c1; 
 }
 
