@@ -10,7 +10,7 @@ import { NavBar } from '../../components/utils/nav/nav';
 import { changeListName, createList, deleteList, getIdList, getLists, getUserDetail, removeFavorite, uploadImg,getProfileData } from '../../redux/actions/useractions';
 
 import "./userProfile.css"
-
+import perfilimg from "./perfilimg.jpg"
 
 import { useNavigate } from "react-router-dom"
 import { getPosts } from '../../redux/actions/postAction';
@@ -26,7 +26,7 @@ const UserProfile = () => {
     const {list} = useSelector((state) => state.user)
     const {profile} = useSelector((state) => state.user)
 
-    const [ image, setImage ] = useState("https://d500.epimg.net/cincodias/imagenes/2016/07/04/lifestyle/1467646262_522853_1467646344_noticia_normal.jpg")
+    const [ image, setImage ] = useState(perfilimg)
     const [ loading, setLoading ] = useState(false)
     const ImgProfile = "https://d500.epimg.net/cincodias/imagenes/2016/07/04/lifestyle/1467646262_522853_1467646344_noticia_normal.jpg"
     const uploadImage = async (e) => {
@@ -134,33 +134,32 @@ return (
         user={user} />
     </div>
     
-    <div className='Hola'>
-    { !profile.length?<div className='profiledetalles'>
+
+    { !profile.length?<div>
               
     <div className="userimage">
-        {loading ? (<h3>Loading picture...</h3>) : (<img className="userimage1"src={image} />)}
+        {loading ? (<h3>Loading picture...</h3>) : (<div><img className="userimage1"src={image}/></div>)}
+          <div>
+            <button  className='saveimageprofile'  onClick={postImg}>Save Image</button>
+          </div>
+            <div className='upload1'>
+            <input className='upfiled' type="file" name="file" placeholeder="Profile Picture" onChange={uploadImage}></input>
+          </div>
     </div>
           
           </div>:
         profile.map((el) => {
             
           return (
-            <div className='profiledetalles'>
+            <div className="userimage">
 
         {loading ? (<h3>Loading picture...</h3>) : (<img className="userimage1"src={el.imgperfil} />)}
 
-          <div>
-            <button  className='saveimageprofile'  onClick={postImg}>Save Image</button>
-
-            <div className='upload1'>
-            <input className='upfiled' type="file" name="file" placeholeder="Profile Picture" onChange={uploadImage} ></input>
-          </div>
-          </div>
             
           </div>
           )  
         })}
-    </div>
+
 
     <div className='userinformation'>
      { !profile.length?<div className='profiledetalles'>
@@ -177,6 +176,7 @@ return (
         profile.map((el) => {
             
           return (
+            <div className='userinformation'>
             <div className='profiledetalles'>
               <h2>User Information:</h2>
               <h3>Peso: {el.peso} Kg</h3>
@@ -187,25 +187,10 @@ return (
                   <a className="btn btn-primary" href='/calculatorimc'>Modify your IBM</a>
                 </button> 
             </div>
+            </div>
           )  
         })}
      </div>
-
-  
-    
-          
-        {/* <div className="upload1">       
-          <label for="files" class="btn-cam">📷</label>
-          <input className='upfiled'
-            id='files'
-            type="file"
-            name="file"
-            placeholeder="Profile Picture"
-            onChange={uploadImage}
-            >
-          </input>
-        </div> */}
-
 
 
      <div className='modifyibm'>
@@ -261,5 +246,4 @@ return (
 }
 
 export default UserProfile
-
 
