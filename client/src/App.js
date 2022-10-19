@@ -19,6 +19,7 @@ import AdminProfil from './pages/admin/adminProfile';
 import { RecipeTable } from './components/admin/RecipesTable/RecipeTable';
 import UserProfile from './pages/userBoart.js/userProfile';
 import NutriProfile from './pages/nutriProfile/NutriProfile';
+import { RegisterAdmin } from './components/admin/RegisterAdmin';
 
 
 function App() {
@@ -33,13 +34,13 @@ function App() {
       <Route exact path="/services" element={<Services/>} />
       <Route exact path='/login' element={<Login/>} />
       <Route exact path="/register" element={<Register/>} />
+      <Route exact path="/recovery-password" element={<Recovery/>}/>
+      <Route exact path="/change-password/:token" element={<Change/>}/>
+      <Route exact path="/confirm-account/:token" element={<ConfirmAccount/>}/>
       <Route  element={<ProtectedRoute isAllowed={!!user} />}>
         <Route exact path='/me' element={<UserProfile />} />
         <Route exact path="/calculatorimc" element={<CalculatorIMC/>} />
         <Route exact path="/suscription" element={<Payment/>}/> 
-        <Route exact path="/recovery-password" element={<Recovery/>}/>
-        <Route exact path="/change-password/:token" element={<Change/>}/>
-        <Route exact path="/confirm-account/:token" element={<ConfirmAccount/>}/>
       </Route>
       <Route exact path="/detail/:id" element={<RecipeDetail/>} />
       <Route exact path="/nutritionist/:id" element={<ProtectedRoute isAllowed={!!user && (!!user.premium ||!!user.nutricionist || !!user.admin) }>
@@ -54,6 +55,7 @@ function App() {
         <Route exact path="/admin/users" element={<UserTable/>}/> 
         <Route exact path="/admin" element={<AdminProfil/>}/> 
         <Route exact path="/admin/recipes" element={<RecipeTable />}/> 
+        <Route exact path="/admin/register" element={<RegisterAdmin />}/> 
       </Route>
     </Routes>
     </div>

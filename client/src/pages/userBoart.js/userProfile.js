@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import FavoriteList from '../../components/usersBoart/FavoriteList';
@@ -61,11 +59,11 @@ const UserProfile = () => {
     },[])
     useEffect(()=>{
         dispatch(getLists())
-    },[])
+    },[dispatch])
     useEffect(()=>{
       dispatch(getProfileData(userId))
     },[dispatch])
-    console.log("hola soy getProfileData", profile)
+    //console.log("hola soy getProfileData", profile)
     function handleUpdate(id, value){
       try {
         dispatch(changeListName(id, value))
@@ -95,13 +93,13 @@ const UserProfile = () => {
       setTimeout(()=>{
         dispatch(getLists())
         dispatch(getIdList(listId))
-      },100)
+      },50)
     }
     function onCreate(listName){
       dispatch(createList(listName))
       setTimeout(()=>{
         dispatch(getLists())
-      },100)
+      },50)
     }
     function handleRenderList(id){
       dispatch(getIdList(id))
