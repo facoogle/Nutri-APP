@@ -169,7 +169,8 @@ export const confirmAcc =(token)=> async (dispatch) => {
 export const addFavorite =(listId,recipeId)=> async (dispatch) =>{
     try {
         let token = JSON.parse(sessionStorage.getItem('token'))
-        let res = await axios.post(`${url}/user/users/myfavorite/lists/${listId}`,recipeId,{
+        console.log(listId,recipeId)
+        let res = await axios.post(`${url}/user/users/myfavorite/lists/${listId}`,{recipeId},{
             headers:{
                 'Authorization': `Bearer ${token}`,
                 'Accept' : 'application/json',

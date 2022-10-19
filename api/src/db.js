@@ -87,6 +87,7 @@ Ingredient.belongsToMany(Recipe,{ through: "recipes_ingredients"})
 Diet.belongsToMany(Ingredient,{ through: "diets_ingredients"})
 Ingredient.belongsToMany(Diet,{ through: "diets_ingredients"})
 User.hasOne(Profile)
+Profile.belongsTo(User)
 
 
 
