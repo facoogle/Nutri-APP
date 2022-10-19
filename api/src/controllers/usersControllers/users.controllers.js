@@ -1,4 +1,4 @@
-const { User , Favorites } = require("../../db.js");
+const { User , Favorites,Profile } = require("../../db.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const authConfig = require("../config/auth.js");
@@ -33,6 +33,7 @@ const userSingIn = async (req, res, next) => {
         password: passwordCryp,
       }) 
         .then((user) => defaultList(user))
+        .then((user) => defaultProfile(user))
         .then((user) => sendConfirmationEmail(user))
       res.send({ message: "User Created, verify your email to confirm" });
     }
@@ -227,7 +228,12 @@ const defaultList = async (user) =>{
     })
     return await user.addFavorite(defList)
   }
-
+  const defaultProfile = async (user) =>{
+    let defProfile = await Profile.create({
+        userId: user.id
+      })
+      return await user.addProfile(defProfile)
+    }
 
 module.exports = {
   userSingIn,

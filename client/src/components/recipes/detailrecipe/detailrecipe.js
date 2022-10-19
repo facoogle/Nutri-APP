@@ -9,7 +9,7 @@ import {
   getRecipePost,
   getTotalRanking,
 } from "../../../redux/actions/recipeactions";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { NavBar } from "../../utils/nav/nav";
 
 //import {check} from "./check.png"
@@ -89,7 +89,6 @@ const RecipeDetail = () => {
 
             <div className="detaildiets">
               <h4 className="detaildietstittle">Diet/s</h4>
-              {console.log(recipe.diets)}
               {recipe.diets? recipe.diets.map(r=>{
                 return<p>{r.name}</p>
               }
@@ -103,12 +102,14 @@ const RecipeDetail = () => {
           </div>
 
             <div className="detailfavourite">
+              {isLogged? (<>
               <button className="favouritebtn" onClick={openModal}>
                 Favorite
               </button>
               <Modal isOpen={isOpen} closeModal={closeModal}>
                 <SelectFavList recipeId={recipe.id} />
               </Modal>
+              </>):null}
             </div>
 
 
