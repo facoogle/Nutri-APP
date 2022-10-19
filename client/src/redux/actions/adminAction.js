@@ -102,32 +102,33 @@ export const banUserById = (id,banned) => async (dispatch) => {
 }
 
 
-// export const banRecipeById = (id,banned) => async (dispatch) => {
+export const banRecipeById = (id,banned) => async (dispatch) => {
+    try{
+        let token = JSON.parse(sessionStorage.getItem('token'))
+        let res = await axios.post(`${url}/user/admin/ban/${id}`,{banned},{
+            headers:{
+                'Authorization': `Bearer ${token}`,
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        //dispatch(banRecipe(res.data))
+    }catch(e){
+        console.log(e)
+    }
+}
+
+
+// export const banRecipeById = (id) => async (dispatch) => {
 //     try{
 //         let token = JSON.parse(sessionStorage.getItem('token'))
-//         let res = await axios.post(`${url}/recipe/admin/${id}`,{banned},{
+//         let res = await axios.post(`http://${url}/user/admin/ban/${id}`,{
 //             headers:{
 //                 'Authorization': `Bearer ${token}`,
 //                 'Accept' : 'application/json',
 //                 'Content-Type': 'application/json'
 //             }
 //         })
-//         //dispatch(banRecipe(res.data))
-//     }catch(e){
-//         console.log(e)
-//     }
-
-
-// export const banRecipeById = (id) => async (dispatch) => {
-//     try{
-//        let token = JSON.parse(sessionStorage.getItem('token'))
-//         let res = await axios.put(`http://${url}/recipe/admin/search/${id}`,{
-        //     headers:{
-        //         'Authorization': `Bearer ${token}`,
-        //         'Accept' : 'application/json',
-        //         'Content-Type': 'application/json'
-        //     }
-        // })
 //         dispatch(banRecipe(res.data))
 //     }catch(e){
 //         console.log(e)
