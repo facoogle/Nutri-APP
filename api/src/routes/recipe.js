@@ -36,11 +36,10 @@ router.post("/new/:userId", auth,async (req, res) => {
     healthScore,
     image,
     summary,
+    diets,
     // cuisines,
     // dishTypes,
-    diets,
   } = req.body;
-
   try {
     if (
       !(

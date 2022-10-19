@@ -90,8 +90,16 @@ export const getTotalRanking = (recipeId) => async (dispatch)=>{
 
 export const postRecipe = (payload) => async (dispatch) => {
     try{
+        console.log('payload',payload);
         let user = JSON.parse(sessionStorage.getItem('user')) 
-        let res = await axios.post(`${url}/recipe/new/${user.id}`, payload)
+        let token = JSON.parse(sessionStorage.getItem('token'))
+        let res = await axios.post(`${url}/recipe/new/${user.id}`, payload,{
+            headers:{
+                'Authorization': `Bearer ${token}`,
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
         console.log(res.send, 'res')
         dispatch(createRecipe(res.data))
     }catch(e){
