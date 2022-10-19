@@ -15,6 +15,7 @@ const SelectFavList = ({recipeId}) => {
 
   const handleCheck = (event) => {
     if (event.target.checked) {
+      alert('add to favorite list?')
        dispatch(addFavorite(event.target.value, recipeId))
         // if(!event.target.checked){
 
