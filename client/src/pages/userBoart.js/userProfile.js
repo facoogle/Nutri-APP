@@ -131,9 +131,69 @@ return (
         <Info
         user={user} />
     </div>
+
+
+    { !profile.length?<div className='profiledetalles'>
+              
+    <div className="userimage">
+        {loading ? (<h3>Loading picture...</h3>) : (<img className="userimage1"src={image} />)}
+    </div>
+          
+          </div>:
+        profile.map((el) => {
+            
+          return (
+            <div className='profiledetalles'>
+              <div className="userimage">
+        {loading ? (<h3>Loading picture...</h3>) : (<img className="userimage1"src={el.imgperfil} />)}
+    </div>
+                            
+            </div>
+            
+          )  
+        })}
     
 
-    { !profile.length?<div>
+
+    
+
+    <div className='postImgSave'>
+          <button  className='btn btn-secondary'  onClick={postImg}>Save Image</button>
+      </div>
+
+    <div className='userinfo'>
+     { !profile.length?<div className='profiledetalles'>
+              <h3>Peso: 0 Kg</h3>
+              <h3>Height: 0 Cm</h3>
+              <h3>IBM: 0</h3>
+          
+          </div>:
+        profile.map((el) => {
+            
+          return (
+            <div className='profiledetalles'>
+              <h3>Peso: {el.peso} Kg</h3>
+              <h3>Height: {el.altura} Cm</h3>
+              <h3>IBM: {el.imc}</h3>               
+            </div>
+          )  
+        })}
+        <div className='upload1'>
+            <label onChange={postImg}>upload 📷</label>
+            <input className='upfiled' type="file" name="file" placeholeder="Profile Picture" onChange={uploadImage} ></input>
+          </div>
+     </div>
+
+     <div className='modifyibm'>
+       <a href='/calculatorimc'>Modify IBM</a>
+     </div>
+    
+
+    {/* { !profile.length?<div className='profiledetalles'>
+    <h2>User Information:</h2>
+              <h3>Peso: 0 Kg</h3>
+              <h3>Height: 0 Cm</h3>
+              <h3>IBM: 0</h3>
               
     <div className="userimage">
         {loading ? (<h3>Loading picture...</h3>) : (<div><img className="userimage1"src={image}/></div>)}
@@ -188,7 +248,7 @@ return (
             </div>
           )  
         })}
-     </div>
+     </div> */}
 
 
      <div className='modifyibm'>
