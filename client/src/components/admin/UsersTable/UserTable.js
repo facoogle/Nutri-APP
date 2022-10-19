@@ -42,7 +42,7 @@ const {usersList} = useSelector((store) => store.admin)
 
     React.useEffect(()=>{
       dispatch(getUsers())
-    },[banned])
+    },[])
   
     const handleRequestSort = (event, property) => {
       const isAsc = orderBy === property && order === 'asc';
@@ -114,7 +114,7 @@ const {usersList} = useSelector((store) => store.admin)
       <NavBar />
       <Box sx={{ width: '100%' }}>
         <Paper sx={{ width: '100%', mb: 2 }}>
-          <EnhancedTableToolbar numSelected={selected.length} />  
+          <EnhancedUsersTableToolbar numSelected={selected.length} />  
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
