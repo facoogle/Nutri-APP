@@ -8,7 +8,8 @@ export const recipesSlice = createSlice({
         detail:{},
         allrecipes:[],
         detailPost: [],
-        ranking: 0
+        ranking: 0,
+        author: ''
     },
     
     reducers:{
@@ -16,6 +17,9 @@ export const recipesSlice = createSlice({
             state.recipes = action.payload
             state.allrecipes = action.payload
             // console.log('receta',state.recipes)
+        },
+        getAuthor: (state, action)=>{
+            state.author = action.payload
         },
         getDiets_Recipe:(state, action) => {
             state.diets = action.payload
@@ -83,6 +87,6 @@ export const recipesSlice = createSlice({
     }
 })
 
-export const {getAllRecipes, getRecipeById, getAllPost, getRanking, getRecipesByName, createRecipe, deleteRecipe, orderByRating, filterByDiet, getDiets_Recipe} = recipesSlice.actions
+export const {getAllRecipes, getAuthor, getRecipeById, getAllPost, getRanking, getRecipesByName, createRecipe, deleteRecipe, orderByRating, filterByDiet, getDiets_Recipe} = recipesSlice.actions
 
 export default recipesSlice.reducer

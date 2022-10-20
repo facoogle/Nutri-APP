@@ -5,11 +5,12 @@ import {
   useEffect, //useState
 } from "react";
 import {
+  getAuthorName,
   getRecipeDetail,
   getRecipePost,
   getTotalRanking,
 } from "../../../redux/actions/recipeactions";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { NavBar } from "../../utils/nav/nav";
 
 //import {check} from "./check.png"
@@ -27,6 +28,7 @@ import {
 } from "../../../redux/actions/postAction";
 import NewPost from "./helper/NewPost";
 import RankingPost from "./helper/RankingPost";
+import NutriProfile from "../../../pages/nutriProfile/NutriProfile";
 
 const RecipeDetail = () => {
   const dispatch = useDispatch();
@@ -35,9 +37,11 @@ const RecipeDetail = () => {
   const { isLogged, logout } = useUser();
   const recipe = useSelector((state) => state.recipes.detail);
   const { detailPost } = useSelector((state) => state.recipes);
+  const { author } = useSelector((state) => state.recipes);
   const rankingTotal = useSelector((state) => state.recipes.ranking);
   //setRecipeDetail(recipe)
 
+const navigate = useNavigate()
   useEffect(() => {
     dispatch(getRecipeDetail(id));
     dispatch(getRecipePost(id));
@@ -46,6 +50,11 @@ const RecipeDetail = () => {
   useEffect(() => {
     dispatch(getTotalRanking(id));
   }, [rankingTotal]);
+  useEffect(()=>{
+    if ( Object.entries(recipe).length >0) {
+      dispatch(getAuthorName(recipe.userId)) 
+    }
+  },)
   function handleUpdate(postId, value) {
     try {
       dispatch(updatePost(postId, value));
@@ -54,6 +63,16 @@ const RecipeDetail = () => {
       }, 100);
     } catch (error) {
       console.log(error);
+    }
+  }
+  console.log('la receta es',recipe);
+  function goToAuthor(e){
+    let user = JSON.parse(sessionStorage.getItem('user'))
+    if (user.admin||user.nutricionist||user.premium) {
+      navigate(`/nutricionist/${e.target.value}`)
+      //<Navigate to="/nutricionist/:id" element={<NutriProfile />} />
+    }else{
+      alert('Please become Premium to access this content')
     }
   }
   function handleDelete(postId) {
@@ -97,6 +116,12 @@ const RecipeDetail = () => {
 
               <h5 className="detaildietstittle">Health Score</h5>
               <li>{recipe.healthScore}</li>
+              <div>
+          {isLogged?<>
+          <h5>Created by {author}</h5>
+           <button className="buttonCreatePost" onClick={goToAuthor} value={recipe.userId} >go to author</button> 
+           </>:null}
+        </div>
             </div>
 
           </div>

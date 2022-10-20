@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const Recipe = require("../db");
-const { getApiRecipeByID, createRecipe, deleteRecipe, updateRecipe, createdRecipes, nutricionistInfo } = require("../controllers/recipecontrollers");
+const { getApiRecipeByID, createRecipe, deleteRecipe, updateRecipe, createdRecipes, nutricionistInfo, getAuthorName } = require("../controllers/recipecontrollers");
 const { recipeBanned } = require ("../controllers/usersControllers/admin.controllers")
 
 const auth = require('../middlewares/auth');
@@ -19,6 +19,13 @@ router.get("/:id", async (req, res) => {
       .json({ error: "error getting that specific recipe" });
   }
 });
+router.get('/author/:authorId', async (req,res)=>{
+  let {authorId} = req.params
+  console.log('authorId',authorId)
+  let author = await getAuthorName(authorId)
+  console.log('author',author)
+  return  res.status(200).json(author.username)
+})
 router.get('/reciperank/:recipeId', async (req,res)=>{
   let {recipeId} = req.params
   let rank = await countRanking(recipeId)
