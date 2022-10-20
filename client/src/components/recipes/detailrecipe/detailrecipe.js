@@ -118,8 +118,8 @@ const navigate = useNavigate()
               <li>{recipe.healthScore}</li>
               <div>
           {isLogged?<>
-          <h5>Created by {author}</h5>
-           <button className="buttonCreatePost" onClick={goToAuthor} value={recipe.userId} >go to author</button> 
+          <h5>Created by {author?author: "NutriU"}</h5>
+         { author?   <button className="buttonCreatePost" onClick={goToAuthor} value={recipe.userId} >go to author</button> :<></>}
            </>:null}
         </div>
             </div>
