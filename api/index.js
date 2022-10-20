@@ -6,7 +6,7 @@ const { getApi } = require("./src/getApiRecipes/getApiRecipe")
 // import dietTypes from './src/utils/apispoon'
 
 // Syncing all the models at once.
-conn.sync({ alter: true }).then(() => {
+conn.sync({ force: true }).then(() => {
   server.listen(process.env.PORT || DB_PORT, () => {
     console.log(`%s listening at ${DB_PORT}`); // eslint-disable-line no-console
  
