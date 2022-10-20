@@ -29,6 +29,14 @@ const getApiRecipeByID = async (id) => {
     return recipeData;
   }
 };
+const getAuthorName =async(id) =>{
+  try {
+      let author = await User.findByPk(id)
+  return author
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 const createRecipe = async (
   userId,
@@ -121,5 +129,6 @@ module.exports = {
   deleteRecipe,
   updateRecipe,
   createdRecipes,
-  nutricionistInfo
+  nutricionistInfo,
+  getAuthorName
 };
