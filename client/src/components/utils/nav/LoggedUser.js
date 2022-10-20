@@ -9,7 +9,8 @@ const LoggedUser = (user) => {
                 return(<>
                 <li class="nav-item"> <a class="nav-link" href="/">Home</a></li>
                 <li class="nav-item "> <a class="nav-link" href="/me">Profile</a></li>
-                <li class="nav-item "> <a class="nav-link" href="/calculatorimc">Calculator IMC</a></li>
+                <li class="nav-item "> <a class="nav-link" href="/calculatorimc">BMI Calculator</a></li>
+                <li class="nav-item "> <a class="nav-link" href="/createrecipe">Create Recipe</a></li>
                 </>)
         }else if(user.admin){
             return(<>
@@ -31,7 +32,7 @@ const LoggedUser = (user) => {
             <li class="nav-item"> <a class="nav-link" href="/">Home</a></li>
             <li class="nav-item "> <a class="nav-link" href="/me">Profile</a></li>
             <li class="nav-item "> <a class="nav-link" href="/suscription">Subscribe!</a></li>
-            <li class="nav-item "> <a class="nav-link" href="/calculatorimc">Calculator IMC</a></li>
+            <li class="nav-item "> <a class="nav-link" href="/calculatorimc">BMI Calculator</a></li>
             </>)
         }
         

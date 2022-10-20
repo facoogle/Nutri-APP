@@ -44,7 +44,7 @@ export const Register = () => {
                 if(!valores.username){
                     errores.username = "Please, enter an name"
                 }else if(!/^[a-zA-ZÀ-ÿ\/^S+]{1,40}$/.test(valores.username)){
-                    errores.username = 'The name can only contain letters and spaces'
+                    errores.username = 'The name can only contain letters without spaces'
                 }
 
                 //validacion passoword

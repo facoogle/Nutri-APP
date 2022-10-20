@@ -54,6 +54,7 @@ const UserProfile = () => {
 
     const navigate2 = useNavigate()
 
+    
 
     useEffect(()=>{
         if(!loggedUserSession){navigate2("/home")}
@@ -134,7 +135,7 @@ return (
         user={user} />
     </div>
     { !profile.length?<div className='profiledetalles'>
-              <h3>Peso: 0 Kg</h3>
+              <h3>Weight: 0 Kg</h3>
               <h3>Height: 0 Cm</h3>
               <h3>IBM: 0</h3>
               <div className='modifyibm'>
@@ -145,7 +146,7 @@ return (
             
           return (
             <div className='profiledetalles'>
-              <h3>Peso: {el.peso} Kg</h3>
+              <h3>Weight: {el.peso} Kg</h3>
               <h3>Height: {el.altura} Cm</h3>
               <h3>{el.imc}</h3>  
               <div className='modifyibm'>
@@ -330,6 +331,7 @@ return (
       
         </div>
         </div>
+        {/* <script src="//code.tidio.co/m8avhzvoxmrmqyx5psxszajteqygq6kc.js" async></script> */}
     </div>
   )
 }
