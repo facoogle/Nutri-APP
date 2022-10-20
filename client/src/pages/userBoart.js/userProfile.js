@@ -25,6 +25,7 @@ const UserProfile = () => {
     const {profile} = useSelector((state) => state.user)
 
     const [ image, setImage ] = useState(perfilimg)
+    const [ image2, setImage2 ] = useState("")
     const [ loading, setLoading ] = useState(false)
     const ImgProfile = "https://d500.epimg.net/cincodias/imagenes/2016/07/04/lifestyle/1467646262_522853_1467646344_noticia_normal.jpg"
     const uploadImage = async (e) => {
@@ -43,7 +44,9 @@ const UserProfile = () => {
       )
       const file = await res.json();
       
+      
       setImage(file.secure_url)
+      setImage2(file.secure_url)
       console.log(file.secure_url)
       setLoading(false)
       
@@ -51,6 +54,7 @@ const UserProfile = () => {
 
     const navigate2 = useNavigate()
 
+    
 
     useEffect(()=>{
         if(!loggedUserSession){navigate2("/home")}
@@ -125,15 +129,104 @@ return (
     <div className='profileCon'>
       <NavBar />
 
-     <div className='profileprincipal'>
-      
+      <div className='profile-arriba'>
     <div className="username1">
         <Info
         user={user} />
     </div>
+    { !profile.length?<div className='profiledetalles'>
+              <h3>Weight: 0 Kg</h3>
+              <h3>Height: 0 Cm</h3>
+              <h3>IBM: 0</h3>
+              <div className='modifyibm'>
+       <a href='/calculatorimc'>Modify IBM</a>
+     </div>
+          </div>:
+        profile.map((el) => {
+            
+          return (
+            <div className='profiledetalles'>
+              <h3>Weight: {el.peso} Kg</h3>
+              <h3>Height: {el.altura} Cm</h3>
+              <h3>{el.imc}</h3>  
+              <div className='modifyibm'>
+       <a href='/calculatorimc'>Modify IBM</a>
+     </div>             
+            </div>
+          )  
+        })}
+
     
 
-    { !profile.length?<div>
+
+    { !profile.length?<div className='profiledetalles2'>
+              
+    <div className="userimage">
+        {loading ? (<h3>Loading picture...</h3>) : (<img className="userimage1"src={image} />)}
+        
+        
+        <div className='userinfo'>
+     
+        <div className='upload1'>
+            
+            <input className='upfiled' type="file" name="file" placeholeder="Profile Picture" onChange={uploadImage} ></input>
+          </div>
+     </div>
+        
+        
+        <div className='postImgSave'>
+          <button  className='btn btn-secondary'  onClick={postImg}>Save Image</button>
+      </div>
+    </div>
+          
+          </div>:
+        profile.map((el) => {
+            
+          return (
+            <div className='profiledetalles2'>
+              <div className="userimage">
+        {loading ? (<h3>Loading picture...</h3>)  : image2.length? (<img className="userimage1"src={image} />) : (<img className="userimage1"src={el.imgperfil} />)}
+        
+
+        <div className='userinfo'>
+     
+     <div className='upload1'>
+        
+         <input className='upfiled' type="file" name="file" placeholeder="Profile Picture" onChange={uploadImage} ></input>
+       </div>
+       
+  </div>
+
+        
+        <div className='postImgSave'>
+          <button  className='btn btn-secondary'  onClick={postImg}>Save Image</button>
+      </div>
+    </div>
+                            
+            </div>
+            
+          )  
+        })}
+    
+
+
+    
+
+    
+      </div>
+<div className='averche'>
+     <div className='profileprincipal'>
+      
+    
+
+     
+    
+
+    {/* { !profile.length?<div className='profiledetalles'>
+    <h2>User Information:</h2>
+              <h3>Peso: 0 Kg</h3>
+              <h3>Height: 0 Cm</h3>
+              <h3>IBM: 0</h3>
               
     <div className="userimage">
         {loading ? (<h3>Loading picture...</h3>) : (<div><img className="userimage1"src={image}/></div>)}
@@ -188,12 +281,10 @@ return (
             </div>
           )  
         })}
-     </div>
+     </div> */}
 
 
-     <div className='modifyibm'>
-
-     </div>
+     
 
         <div className='mylists'>
           <div className='name-list'>
@@ -239,6 +330,8 @@ return (
       </div>
       
         </div>
+        </div>
+        {/* <script src="//code.tidio.co/m8avhzvoxmrmqyx5psxszajteqygq6kc.js" async></script> */}
     </div>
   )
 }

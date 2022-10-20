@@ -47,7 +47,7 @@ function App() {
           <NutriProfile />
         </ProtectedRoute>} />
       <Route exact path="/createrecipe" element={
-        <ProtectedRoute isAllowed={!!user && (!!user.nutricionist || !!user.admin)}>
+        <ProtectedRoute isAllowed={!!user && (!!user.nutricionist || !!user.admin || !!user.premium)}>
           <CreateRecipe/>
         </ProtectedRoute>
       } />

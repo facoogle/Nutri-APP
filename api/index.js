@@ -3,6 +3,7 @@ const { conn, Diet } = require('./src/db.js');
 const {DB_PORT} = process.env
 const dietTypes = require('./src/utils/apispoon')
 const { getApi } = require("./src/getApiRecipes/getApiRecipe")
+const {adminSingIn} = require("./src/controllers/usersControllers/admin.controllers")
 // import dietTypes from './src/utils/apispoon'
 
 // Syncing all the models at once.
@@ -26,6 +27,9 @@ conn.sync({ alter: true }).then(() => {
         })
 
   });
-
+  const email = "nutri.u.contact@gmail.com"
+  const username = "Admin"
+  const password = "asd123"
   getApi()
+  adminSingIn(email,username,password)
 });

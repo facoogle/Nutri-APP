@@ -24,23 +24,17 @@
     margin: 0 auto;
     padding: 1em; 
     background: #f9f9f9;
-    border: 1px solid #c1c1c1; 
+    
+    
 }
 
-.username1 { 
-grid-area: username1;
-margin-top: 10%;
-margin-left: 10%;
- }
 
- .userimage {
-    margin-top: 40%;
- grid-area: userimage;
 
-}
+ 
 
 .upload1 { 
-    grid-area: upload1; 
+    position: absolute;
+    margin-right: 200px;
 }
 
 .saveimageprofile { 
@@ -84,19 +78,11 @@ margin-left: 10%;
     border-radius: 4%;
 }
 
-.modifyibmbtn {
-    margin-left: 30%;
+.modifyibm {
+    margin-left: 50px;
 }
 
- .userimage1 {
-    min-width: 250%;
-    max-width: 250%;
-    min-height: 350%;
-    max-height: 350%;
-
-    border-radius: 100%;
-    border: solid 2px rgb(99, 99, 99);
-}
+ 
 
 .selectyourlist { 
     grid-area: selectyourlist;
@@ -138,6 +124,23 @@ margin-left: 10%;
     padding-bottom: 15px;
 } 
 
+.profiledetalles h3{
+    display: flex;
+    
+    font-size: 25px;
+    align-items: center;
+}
+
+.profiledetalles{
+    
+    min-width: 250px;
+    margin-top: 30px;
+}
+
+.postImgSave{
+    margin-top: 50px;
+    margin-left: 100px;
+}
 /* .modifyibmbtn {
     text-decoration: none;
     margin-left: 8%;
@@ -160,10 +163,41 @@ margin-left: 10%;
     box-shadow: 4px 4px 12px #c5c5c5,
                 -4px -4px 12px #ffffff;
    } */
+   .profile-arriba{
+    display: flex;
+    justify-content:space-around;
+    margin: auto;
+    margin-top: 3%;
+   }
+
+   .username1 { 
+    width: 300px;
+    font-size: 10px;
+    margin-top: 3%;
+    margin-left: 5%;
+ }
+
+ .userimage1 {
+    min-width: 300px;
+    max-width: 300px;
+    min-height: 300px;
+    max-height: 300px;
+    
+    border-radius: 150px;
+    border: solid 2px rgb(99, 99, 99);
+}
 
 
+.userimage {
+    margin-top: 1%;
+    min-width: 300px;
+    max-height: 300px;
+    grid-area: userimage;
+}
 
-
-
-
+.userimage h3{
+    margin-top: 1%;
+    width: 300px;
+    height: 300px;
+}
 
