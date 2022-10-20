@@ -52,7 +52,9 @@ const navigate = useNavigate()
   }, [rankingTotal]);
   useEffect(()=>{
     if ( Object.entries(recipe).length >0) {
-      dispatch(getAuthorName(recipe.userId)) 
+      if (!recipe.apiId) {
+        dispatch(getAuthorName(recipe.userId)) 
+      }
     }
   },)
   function handleUpdate(postId, value) {
@@ -117,7 +119,7 @@ const navigate = useNavigate()
               <h5 className="detaildietstittle">Health Score</h5>
               <li>{recipe.healthScore}</li>
               <div>
-          {isLogged?<>
+          {recipe.apiId? null : isLogged?<>
           <h5>Created by {author}</h5>
            <button className="buttonCreatePost" onClick={goToAuthor} value={recipe.userId} >go to author</button> 
            </>:null}
