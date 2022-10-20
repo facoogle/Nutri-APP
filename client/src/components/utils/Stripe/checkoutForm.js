@@ -95,7 +95,7 @@ export function PaymentForm() {
               <li>✅ You can chat with real nutritionists</li>
               <li>✅ You can see more details from the recipes you search</li>
               <li>✅ You will have more slots in your favourite recipe list</li>
-              <li>✅ you will have exclusive access to the new features that we implement in the future</li>
+              <li>✅ You will have exclusive access to the new features that we implement in the future</li>
             </ul>
           </div>
           <br/>
