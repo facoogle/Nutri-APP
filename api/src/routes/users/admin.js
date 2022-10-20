@@ -7,6 +7,7 @@ const {
   userByName,
   userByid,
   userBanned,
+  recipeBanned,
 } = require("../../controllers/usersControllers/admin.controllers");
 
 //Middleware
@@ -76,5 +77,22 @@ router.post('/search/:id', auth, async(req,res)=>{
         console.log(error);
     }
 })
+
+
+router.post("/ban/:id",auth, async (req, res) => {
+  let { id } = req.params;
+  let {banned} = req.body
+  console.log(banned, "soy banned")
+  try {
+    let recipe = await recipeBanned(id,banned)
+   
+    res.send(`Recipe ${id} banned or unbanned SUCCESS`);
+  
+ 
+  } catch (e) {
+    res.send(e.message);
+  }
+});
+
 
 module.exports = router;

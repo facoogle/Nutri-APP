@@ -5,36 +5,38 @@ const { Recipe, Diet } = require("../db.js")
 const uuid = require('uuid');
 
 
-const getApiRecipes = async() => {
-    try {
 
-        const axiosResponse = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`)
-        const { results } = axiosResponse.data;
+// const getApiRecipes = async() => {
+//     try {
 
-        if(results !== 0 ) {
-            let dishRecipe = await results?.map((e) => {
-                return {
-                    //id: uuid.v4(),
-                    id: e.id,
-                    name: e.title,
-                    healthScore: e.healthScore,
-                    image: e.image,
-                    banned: e.banned,
-                    summary: e.summary,
-                    //cuisines: e.cuisines?.map(ele => ele),
-                    //dishTypes: e.dishTypes?.map(ele => ele),
-                    diets: e.diets?.map(ele => ele),
-                    createdInDB: false
-                    //ingredients: e.analyzedInstructions[0].steps?.map(ele => ele.ingredients.name): "does not have any ingredient"
-            }
-        })
-            return dishRecipe
-    }
+//         const axiosResponse = await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&addRecipeInformation=true&number=100`)
+//         const { results } = axiosResponse.data;
 
-    } catch(error) {
-        console.log(error)
-    }
-}
+//         if(results !== 0 ) {
+//             let dishRecipe = await results?.map((e) => {
+//                 return {
+//                     //id: uuid.v4(),
+//                     id: e.id,
+//                     name: e.title,
+//                     healthScore: e.healthScore,
+//                     image: e.image,
+//                     banned: e.banned,
+//                     summary: e.summary,
+//                     //cuisines: e.cuisines?.map(ele => ele),
+//                     //dishTypes: e.dishTypes?.map(ele => ele),
+//                     diets: e.diets?.map(ele => ele),
+//                     createdInDB: false
+//                     //ingredients: e.analyzedInstructions[0].steps?.map(ele => ele.ingredients.name): "does not have any ingredient"
+//             }
+//         })
+//             return dishRecipe
+//     }
+
+//     } catch(error) {
+//         console.log(error)
+//     }
+// }
+
 
 
 const getDBRecipes = async() => {
@@ -126,7 +128,7 @@ const getDBNameRecipes = async(name) => {
 
 const getAllInfo = async() => {
     try {
-            let data = await getApiRecipes()
+            let data //await getApiRecipes()
             let dbData = await getDBRecipes()
             if(!dbData || dbData.length === 0) {
 

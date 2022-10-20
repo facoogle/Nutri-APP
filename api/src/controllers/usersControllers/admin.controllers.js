@@ -1,4 +1,4 @@
-const { User, Favorites } = require("../../db.js");
+const { User, Favorites, Recipe } = require("../../db.js");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth.js')
@@ -89,6 +89,16 @@ const userBanned =async(id,banned) =>{
     }
 }
 
+const recipeBanned =async(id,banned) =>{
+    try {
+        let recipe = await Recipe.findByPk(id)
+        await recipe.update({banned: banned})
+        return recipe 
+    } catch (error) {
+        console.log(error)
+    }
+  }
+
 const defaultList = async (user) =>{
     let defList = await Favorites.create({
         userId: user.id
@@ -103,5 +113,6 @@ module.exports = {
     usersList,
     userByid,
     userByName,
-    userBanned
+    userBanned,
+    recipeBanned
 }

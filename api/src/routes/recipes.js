@@ -14,6 +14,7 @@ router.get("/", async (req, res) => {
 
             } else {
             let allInfo =await getAllInfo()
+            
             return res.status(201).json(allInfo)
             }
 

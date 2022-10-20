@@ -54,7 +54,7 @@ const changeToPremium = async (userEmail, userName, paymentMethod) =>{
       paymenthID: subscription.id,
     })
     
-    // console.log('facturaa',factura)
+    //console.log('facturaa',factura)
     await user.addPayment(factura)
     user.update({ premium: true })
 

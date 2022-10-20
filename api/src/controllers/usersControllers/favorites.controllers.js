@@ -31,6 +31,7 @@ const listFavorite = async (userId) => {
       where: {
         userId:userId
       },
+      include:{model: Recipe}
     });
     return fav;
   } catch (error) {

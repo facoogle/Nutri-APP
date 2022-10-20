@@ -17,6 +17,8 @@ const LoggedUser = (user) => {
             <li class="nav-item "> <a class="nav-link" href="/createrecipe">Create Recipe</a></li>
             <li class="nav-item "> <a class="nav-link" href="/me">Profile</a></li>
             <li class="nav-item "> <a class="nav-link" href="/admin/users">Users Info</a></li>
+            <li class="nav-item "> <a class="nav-link" href="/admin/register">New Admin</a></li>
+            <li class="nav-item "> <a class="nav-link" href="/admin/recipes">Recipe Info</a></li>
             </>)
         }else if(user.nutricionist) {
             return(<>

@@ -10,34 +10,40 @@ import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import EnhancedTableToolbar from '../TableHelpers/EnhancedTableToolbar';
-import EnhancedTableHead from '../TableHelpers/EnhancedTableHead';
-import { getComparator, stableSort} from '../TableHelpers/TableHelpers'
+import EnhancedRecipesTableToolbar from './EnhancedRecipesTableToolbar';
+import EnhancedRecipesTableHead from './EnhancedRecipesTableHead';
+import { getComparator, stableSort } from '../TableHelpers/TableHelpers'
 import { NavBar } from '../../utils/nav/nav';   
-import { getRecipes } from '../../../redux/actions/adminAction';
 import { useDispatch, useSelector } from 'react-redux';
-// import { getUsers } from '../../redux/actions/adminAction';
-//import ResponsiveAppBar from '../admin_NavBar';
+import { getRecipes, banRecipeById } from '../../../redux/actions/adminAction';
+
+
 
 export const RecipeTable = () => {
 
-const dispatch = useDispatch()
-
-const {recipesList} = useSelector((store) => store.admin)
-
+  const {recipesList} = useSelector((store) => store.admin)
+  
+  const dispatch = useDispatch()
 
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
-    const [userPerPage, setuserPerPage] = React.useState(15);
+    const [recipesPerPage, setrecipesPerPage] = React.useState(15);
+    const [click, setClick] = React.useState(false)
 
 
     React.useEffect(()=>{
       dispatch(getRecipes())
-    },[])
+    },[click])
+
+
+    React.useEffect(() => {
+      dispatch(getRecipes())
+    }, [])
   
+
     const handleRequestSort = (event, property) => {
       const isAsc = orderBy === property && order === 'asc';
       setOrder(isAsc ? 'desc' : 'asc');
@@ -55,6 +61,7 @@ const {recipesList} = useSelector((store) => store.admin)
   
     const handleClick = (event, name) => {
       const selectedIndex = selected.indexOf(name);
+      console.log(selectedIndex, "SELECTED INDEX")
       let newSelected = [];
   
       if (selectedIndex === -1) {
@@ -77,33 +84,44 @@ const {recipesList} = useSelector((store) => store.admin)
       setPage(newPage);
     };
   
-    const handleChangeuserPerPage = (event) => {
-      setuserPerPage(parseInt(event.target.value, 10));
+    const handleChangerecipesPerPage = (event) => {
+      setrecipesPerPage(parseInt(event.target.value, 10));
       setPage(0);
     };
   
     const handleChangeDense = (event) => {
       setDense(event.target.checked);
     };
+
+    const handleClick2 = (event, recipe, estado) => {
+      console.log(event.target.checked, "ESTE ES EL EVENT")
+      console.log(recipe, "ESTE ES RECIPE ID")
+      console.log(estado, "ESTE ES EL ESTADO")
+      click ? setClick(false) : setClick(true)
+      dispatch(banRecipeById(recipe,event.target.checked))
+      dispatch(getRecipes())
+    }
   
-    const isSelected = (name) => selected.indexOf(name) !== -1;
+    const isSelected = (id) => { 
+      let receta = recipesList.find((recipe) => recipe.id === id)
+      return receta.banned
+    }
   
-    // Avoid a layout jump when reaching the last page with empty user.
-    const emptyuser =
-      page > 0 ? Math.max(0, (1 + page) * userPerPage - recipesList.length) : 0;
+    const emptyrecipes =
+      page > 0 ? Math.max(0, (1 + page) * recipesPerPage - recipesList.length) : 0;
   
     return (<>
-      <NavBar />  
+      <NavBar/>
       <Box sx={{ width: '100%' }}>
         <Paper sx={{ width: '100%', mb: 2 }}>
-          <EnhancedTableToolbar numSelected={selected.length} />  {/*ACA TENGO QUE VER COMO LE PASO EL ID PARA BANEARLO*/}
+          <EnhancedRecipesTableToolbar numSelected={selected.length} /> 
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
               aria-labelledby="tableTitle"
               size={dense ? 'small' : 'medium'}
             >
-              <EnhancedTableHead
+              <EnhancedRecipesTableHead
                 numSelected={selected.length}
                 order={order}
                 orderBy={orderBy}
@@ -112,12 +130,10 @@ const {recipesList} = useSelector((store) => store.admin)
                 rowCount={recipesList.length}
               />
               <TableBody>
-                {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                   user.slice().sort(getComparator(order, orderBy)) */}
                 {stableSort(recipesList, getComparator(order, orderBy))
-                  .slice(page * userPerPage, page * userPerPage + userPerPage)
+                  .slice(page * recipesPerPage, page * recipesPerPage + recipesPerPage)
                   .map((row, index) => {
-                    const isItemSelected = isSelected(row.name);
+                    const isItemSelected = isSelected(row.id);
                     const labelId = `enhanced-table-checkbox-${index}`;
   
                     return (
@@ -132,6 +148,7 @@ const {recipesList} = useSelector((store) => store.admin)
                       >
                         <TableCell padding="checkbox">
                           <Checkbox
+                            onChange={(event) => handleClick2(event, row.id, isItemSelected)}
                             color="primary"
                             checked={isItemSelected}
                             inputProps={{
@@ -151,15 +168,15 @@ const {recipesList} = useSelector((store) => store.admin)
                         <TableCell align="left">{row.healthScore}</TableCell>
                         <TableCell align="left">{row.createdInDB.toString()}</TableCell>
                         <TableCell align="left">{row.banned.toString()}</TableCell>
-                        <TableCell align="left">{row.userId}</TableCell>
+                        {/* <TableCell align="left">{row.user_id}</TableCell> */}
   
                       </TableRow>
                     );
                   })}
-                {emptyuser > 0 && (
+                {emptyrecipes > 0 && (
                   <TableRow
                     style={{
-                      height: (dense ? 33 : 53) * emptyuser,
+                      height: (dense ? 33 : 53) * emptyrecipes,
                     }}
                   >
                     <TableCell colSpan={6} />
@@ -169,13 +186,13 @@ const {recipesList} = useSelector((store) => store.admin)
             </Table>
           </TableContainer>
           <TablePagination
-            userPerPageOptions={[10, 25, 50, 100]}
+            recipesPerPageOptions={[10, 25, 50, 100]}
             component="div"
             count={recipesList.length}
-            userPerPage={userPerPage}
+            recipesPerPage={recipesPerPage}
             page={page}
             onPageChange={handleChangePage}
-            onuserPerPageChange={handleChangeuserPerPage}
+            onrecipesPerPageChange={handleChangerecipesPerPage}
           />
         </Paper>
         <FormControlLabel

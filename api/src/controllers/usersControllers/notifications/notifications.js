@@ -18,7 +18,7 @@ if(banned.toString() == "false"){
         from: "nutri.u.contact@gmail.com",
         to: email,
         subject:"Your nutri-u account has been unbanned",
-        html:`<p>Your account has been unbanned for administrator<a href="nutri.u.contact@gmail.com">nutri.u.contact@gmail.com</a></p>`,
+        html:`<p>Your account has been unbanned for administrator  <a href="nutri.u.contact@gmail.com">nutri.u.contact@gmail.com</a></p>`,
     })
 }
 
@@ -27,7 +27,7 @@ if(banned.toString() == "true") {
         from: "nutri.u.contact@gmail.com",
         to: email,
         subject:"Your nutri-u account has been banned",
-        html:`<p>You were blocked by a Nutri-u administrator, if you see that this was an error, contact this email<a href="nutri.u.contact@gmail.com">nutri.u.contact@gmail.com</a></p>`,
+        html:`<p>You were blocked by a Nutri-u administrator, if you see that this was an error, contact this email  <a href="nutri.u.contact@gmail.com">nutri.u.contact@gmail.com</a></p>`,
     })
 }
 

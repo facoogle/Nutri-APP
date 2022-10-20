@@ -1,7 +1,8 @@
 const { Router } = require("express");
 const router = Router();
 const Recipe = require("../db");
-const { getApiRecipeByID, createRecipe, deleteRecipe, updateRecipe } = require("../controllers/recipecontrollers");
+const { getApiRecipeByID, createRecipe, deleteRecipe, updateRecipe, createdRecipes, nutricionistInfo } = require("../controllers/recipecontrollers");
+const { recipeBanned } = require ("../controllers/usersControllers/admin.controllers")
 
 const auth = require('../middlewares/auth');
 const { countRanking, getRecipePost } = require("../controllers/usersControllers/PostRanking.controllers");
@@ -28,17 +29,17 @@ router.get('/post/:recipeId', async (req,res)=>{
   let post = await getRecipePost(recipeId)
   res.json(post)
 })
-router.post("/", auth,async (req, res) => {
+router.post("/new/:userId", auth,async (req, res) => {
+  const {userId} =req.params
   const {
     name,
     healthScore,
     image,
     summary,
+    diets,
     // cuisines,
     // dishTypes,
-    diets,
   } = req.body;
-
   try {
     if (
       !(
@@ -49,7 +50,8 @@ router.post("/", auth,async (req, res) => {
     )
       throw new Error("We dont recive all the necessary info");
 
-    createRecipe(
+    let recipe = await createRecipe(
+      userId,
       name,
       healthScore,
       image,
@@ -59,7 +61,7 @@ router.post("/", auth,async (req, res) => {
       diets
     );
 
-    res.send(`Recipe ${name} created successfully`);
+    res.send(recipe);
   } catch (e) {
     res.send(e.message);
   }
@@ -87,6 +89,28 @@ router.put("/:id",auth, async (req, res) => {
     res.send(e.message);
   }
 });
+router.get('/nutri/:id', auth,async (req, res) =>{
+  let { id } = req.params;
+  try {
+    let nutricionist = await nutricionistInfo(id)
+    res.send(nutricionist)
+  } catch (e) {
+    res.send(e.message);
+  }
+})
+
+router.get('/createdby/:authorId' ,auth, async (req, res) =>{
+  let { authorId } = req.params
+  try {
+    let recipes = await createdRecipes(authorId)
+    res.send(recipes)
+  } catch (e) {
+    res.send(e.message);
+  }
+})
+
+
+
 
 
 module.exports = router;

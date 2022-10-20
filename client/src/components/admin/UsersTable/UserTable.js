@@ -10,8 +10,8 @@ import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import EnhancedTableToolbar from '../TableHelpers/EnhancedTableToolbar';
-import EnhancedTableHead from '../TableHelpers/EnhancedTableHead';
+import EnhancedUsersTableToolbar from './EnhancedUsersTableToolbar';
+import EnhancedUsersTableHead from './EnhancedUsersTableHead';
 import { getComparator, stableSort} from '../TableHelpers/TableHelpers'
 import { NavBar } from '../../utils/nav/nav';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,33 +21,10 @@ import { banUserById } from '../../../redux/actions/adminAction';
 
 export const UserTable = () => {
 
-//   const getAllUsers = /*async*/() => {  //PASAR A ASYNC AWAIT CUANDO MIGRE AL PF
-//     try {
-//         let userData = /*await*/pruebaUsers.map(e => {
-//             return {
-//                 id: e.id,
-//                 username: e.username,
-//                 email: e.email,
-//                 password: e.password,
-//                 banned: e.banned,
-//                 admin: e.admin,
-//                 premium: e.premium,
-//                 nutricionist: e.nutricionist,
-//                 free: e.free,
-//                 logged: e.logged,
-//             }
-//         })
-//         return userData
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
-
-
 const {usersList} = useSelector((store) => store.admin)
 
 
-   const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
 
     const [order, setOrder] = React.useState('asc');
@@ -56,7 +33,12 @@ const {usersList} = useSelector((store) => store.admin)
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [userPerPage, setuserPerPage] = React.useState(15);
+    const [click, setClick] = React.useState(false)
 
+    React.useEffect(() => {
+      dispatch(getUsers())
+    },[click])
+    
 
     React.useEffect(()=>{
       dispatch(getUsers())
@@ -71,9 +53,7 @@ const {usersList} = useSelector((store) => store.admin)
     const handleSelectAllClick = (event) => {
       if (event.target.checked) {
         const newSelected = usersList.map((n) => n.banned);
-       
         setSelected(newSelected);
-        
         return;
       }
       setSelected([]);
@@ -114,16 +94,19 @@ const {usersList} = useSelector((store) => store.admin)
     };
 
     const handleClick2 = (event, user, estado) => {
-      
+      console.log(event.target.checked, "ESTE ES EL EVENT")
       console.log(user, "ESTE ES USER ID")
       console.log(estado, "ESTE ES EL ESTADO")
-      dispatch(banUserById(user,estado))
-
+      click ? setClick(false) : setClick(true)
+      dispatch(banUserById(user,event.target.checked))
+      dispatch(getUsers())
     }
   
-    const isSelected = (name) => selected.indexOf(name) !== -1;
+    const isSelected = (id) => { 
+      let usuario = usersList.find((user) => user.id === id)
+      return usuario.banned
+    }
   
-    // Avoid a layout jump when reaching the last page with empty user.
     const emptyuser =
       page > 0 ? Math.max(0, (1 + page) * userPerPage - usersList.length) : 0;
   
@@ -131,14 +114,14 @@ const {usersList} = useSelector((store) => store.admin)
       <NavBar />
       <Box sx={{ width: '100%' }}>
         <Paper sx={{ width: '100%', mb: 2 }}>
-          <EnhancedTableToolbar numSelected={selected.length} />  {/*ACA TENGO QUE VER COMO LE PASO EL ID PARA BANEARLO*/}
+          <EnhancedUsersTableToolbar numSelected={selected.length} />  
           <TableContainer>
             <Table
               sx={{ minWidth: 750 }}
               aria-labelledby="tableTitle"
               size={dense ? 'small' : 'medium'}
             >
-              <EnhancedTableHead
+              <EnhancedUsersTableHead
                 numSelected={selected.length}
                 order={order}
                 orderBy={orderBy}
@@ -147,12 +130,10 @@ const {usersList} = useSelector((store) => store.admin)
                 rowCount={usersList.length}
               />
               <TableBody>
-                {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                   user.slice().sort(getComparator(order, orderBy)) */}
                 {stableSort(usersList, getComparator(order, orderBy))
                   .slice(page * userPerPage, page * userPerPage + userPerPage)
                   .map((row, index) => {
-                    const isItemSelected = isSelected(row.username);
+                    const isItemSelected = isSelected(row.id);
                     const labelId = `enhanced-table-checkbox-${index}`;
                     
                     return (
@@ -167,7 +148,7 @@ const {usersList} = useSelector((store) => store.admin)
                       >
                         <TableCell padding="checkbox">
                           <Checkbox
-                            onClick={(event) => handleClick2(event, row.id, isItemSelected)}
+                            onChange={(event) => handleClick2(event, row.id, isItemSelected)}
                             color="primary"
                             checked={isItemSelected}
                             inputProps={{

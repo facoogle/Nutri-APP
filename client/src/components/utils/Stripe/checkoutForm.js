@@ -9,6 +9,7 @@ import {
 import swal from 'sweetalert';
 import { NavBar } from "../nav/nav";
 import { useNavigate } from "react-router-dom"
+import { Spinner } from '../spinner/spinner'
 import './checkoutForm.css' 
 const { REACT_APP_HOST } =
   process.env;
@@ -31,6 +32,7 @@ export function PaymentForm() {
   
 
   const [user, setUser] = useState('')
+  const [loader, setLoader] = useState(true)
 
   const stripe = useStripe();
   const elements = useElements();
@@ -39,6 +41,8 @@ export function PaymentForm() {
   const createSubscription = async () => {
     
     try {
+      
+      setLoader(false)
 
       const paymentMethod = await stripe.createPaymentMethod({
         card: elements.getElement("cardNumber"),
@@ -64,13 +68,16 @@ export function PaymentForm() {
 
       // console.log('ESTIIIII', data.respuesta)
       const confirm = await stripe.confirmCardPayment(data.respuesta.clientSecret);
+      console.log('estoo',confirm)
       if (confirm.error) return alert("Payment unsuccessful!");
+      if (confirm) setLoader(true)
       swal("Payment Successful! Subscription active.").then(navigate2('/home'))
       
 
     } catch (err) {
       // console.error(err);
       swal("Payment failed! Please checkout the given information", `Error message: ${err.message}`  );
+      setLoader(true)
     }
   };
 
@@ -94,12 +101,12 @@ export function PaymentForm() {
           <br/>
       </div>   
       <h1>BE PREMIUM NOW!</h1>
+      {
+        loader === false ? <Spinner className='spinner'/> : <></>
+      }
       <div className='cardContainer'>
         <div >
           <br/>
-          {/* <label className='label'>Card Name:</label>
-          <br/>
-          <input className='nameInput' placeholder='Name'/> */}
           <br/>
           <label className='label'>Card Number:</label>
           <CardNumberElement className='cardInputWrapper' />

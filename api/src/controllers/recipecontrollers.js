@@ -1,6 +1,6 @@
 const axios = require("axios");
 const { API_KEY } = process.env;
-const { Recipe, Diet } = require("../db");
+const { User, Recipe, Diet, Post, Profile } = require("../db");
 
 const getApiRecipeByID = async (id) => {
   if (id.length > 15) {
@@ -31,6 +31,7 @@ const getApiRecipeByID = async (id) => {
 };
 
 const createRecipe = async (
+  userId,
   name,
   healthScore,
   image,
@@ -44,6 +45,7 @@ const createRecipe = async (
   if (findRecipe.length !== 0) throw new Error("This recipe already exist");
 
   const newRecipe = await Recipe.create({
+    userId,
     name,
     healthScore: healthScore ? healthScore : 0,
     image: image ? image : "",
@@ -56,6 +58,7 @@ const createRecipe = async (
       where: { name: diets },
     });
     await newRecipe.addDiet(dietType);
+    return newRecipe
 }catch(e){
     console.log(e)
 }
@@ -81,11 +84,42 @@ const updateRecipe = async (id) => {
     console.log(e.message);
   }
 }
+const nutricionistInfo = async (id) =>{
+try {
+  let nutri = await User.findByPk(id)
+  let nutriProfile = await Profile.findOne({
+    where: {
+      userId: nutri.dataValues.id,
+    }})
+    let nu ={ 
+      username:nutri.dataValues.username,
+      email:nutri.dataValues.email,
+      id:nutri.dataValues.id,
+      image:nutriProfile?nutriProfile.dataValues.imgperfil:"https://d500.epimg.net/cincodias/imagenes/2016/07/04/lifestyle/1467646262_522853_1467646344_noticia_normal.jpg"}
+  return nu
+} catch (error) {
+  console.log(error);
+}
+}
 
+const createdRecipes = async (id) =>{
+try {
+  let author = await Recipe.findAll({
+    where:{ userId:id },
+    //include:{ model: Post},
+    include:[{ model:  Post },{ model: Diet }]
+  })
+ return author
 
+} catch (error) {
+  console.log(error);
+}
+}
 module.exports = {
   getApiRecipeByID,
   createRecipe,
   deleteRecipe,
   updateRecipe,
+  createdRecipes,
+  nutricionistInfo
 };

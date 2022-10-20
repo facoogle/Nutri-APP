@@ -1,0 +1,13 @@
+.createdRecipes{
+    width: fit-content;
+    max-width: 500px;
+    justify-content: space-between;
+}
+.imagenNutri{
+    max-width: 400px;
+}
+.nutriInfo{
+    display: flex;
+    justify-content: space-around;
+    width: -webkit-fill-available;
+}

@@ -43,7 +43,7 @@ export const CreateRecipe = () => {
             error.summary = "Summary is required";
         }
 
-        if(!input.healthScore || input.healthScore < 0 || input.healthScore > 100) {
+        if(!input.healthScore || input.healthScore < 0 || input.healthScore > 101) {
             error.healthScore = "Health Score is required and must be between 0 and 100";
         }
 

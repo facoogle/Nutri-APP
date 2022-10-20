@@ -1,0 +1,38 @@
+.favoritelistcontainer{
+    margin-top: 5%;
+    padding: 1em; 
+    background: #f9f9f9;
+    border: 1px solid #c1c1c1; 
+    border-radius: 4%;
+}
+
+.buttonEdit {
+    margin-right: 2%;
+    float: right;
+}
+
+.buttonDelete {
+    float: right;
+}
+
+.buttonListName {
+    margin-right: 30%;
+    color: #090909;
+    padding: 0.4em 1.7em;
+    font-size: 100%;
+    border-radius: 10%;
+    background: #e8e8e8;
+    border: 1px solid #e8e8e8;
+    transition: all .3s;
+    box-shadow: 6px 6px 12px #c5c5c5,
+                -6px -6px 12px #ffffff;
+   }
+   
+   .buttonListName:hover {
+    border: 1px solid white;
+   }
+   
+   .buttonListName:active {
+    box-shadow: 4px 4px 12px #c5c5c5,
+                -4px -4px 12px #ffffff;
+   }

@@ -6,10 +6,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import { visuallyHidden } from '@mui/utils';
-//import pruebaUsers from '../components/User'; //importar User de la DB
-import { headCellsUser } from '../UsersTable/headCellsUser';
+import { headCellsUser } from './headCellsUser';
 
-function EnhancedTableHead(props) {
+function EnhancedUsersTableHead(props) {
     const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
     props;
   const createSortHandler = (property) => (event) => {
@@ -21,15 +20,6 @@ function EnhancedTableHead(props) {
       <TableRow>
         <TableCell padding="normal">
             banned
-          {/* <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'select all desserts',
-            }}
-          /> */}
         </TableCell>
         {headCellsUser.map((headCell) => (
             <TableCell
@@ -56,7 +46,7 @@ function EnhancedTableHead(props) {
     </TableHead>
   );
 }
-EnhancedTableHead.propTypes = {
+EnhancedUsersTableHead.propTypes = {
     numSelected: PropTypes.number.isRequired,
     onRequestSort: PropTypes.func.isRequired,
     onSelectAllClick: PropTypes.func.isRequired,
@@ -65,4 +55,4 @@ EnhancedTableHead.propTypes = {
     rowCount: PropTypes.number.isRequired,
   };
 
-export default EnhancedTableHead
+export default EnhancedUsersTableHead

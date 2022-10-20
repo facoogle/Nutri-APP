@@ -4,15 +4,15 @@ export const headCellsRecipe = [
         field: 'id',
         numeric: false,
         disablePadding: true,
-        label: 'Recipe ID',
+        label: 'ID',
     },
-    {
-        id: 'apiId',
-        field: 'ApiId',
-        numeric: true,
-        disablePadding: true,
-        label: 'Api Recipe ID',
-    },
+    // {
+    //     id: 'apiId',
+    //     field: 'ApiId',
+    //     numeric: true,
+    //     disablePadding: true,
+    //     label: 'Api ID',
+    // },
     {
         id: 'name',
         numeric: false,
@@ -37,10 +37,10 @@ export const headCellsRecipe = [
         disablePadding: false,
         label: 'Banned',
     },
-    {
-        id: 'userId',
-        numeric: false,
-        disablePadding: false,
-        label: 'User ID',
-    },
+    // {
+    //     id: 'userId',
+    //     numeric: false,
+    //     disablePadding: false,
+    //     label: 'User ID',
+    // },
 ];

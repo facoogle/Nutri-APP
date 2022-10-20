@@ -16,19 +16,15 @@ export const NavAbout = () => {
           About us
         </a>
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          
           <li>
-            <a class="dropdown-item " href="/contact">
-              Contact
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item " href="/service">
+            <a class="dropdown-item " href="/services">
               Service
             </a>
           </li>
           <li>
-            <a class="dropdown-item " href="/legal">
-              Legal
+            <a class="dropdown-item " href="/About">
+              About
             </a>
           </li>
         </ul>

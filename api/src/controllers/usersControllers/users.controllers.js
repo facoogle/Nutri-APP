@@ -1,4 +1,4 @@
-const { User , Favorites } = require("../../db.js");
+const { User , Favorites,Profile } = require("../../db.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const authConfig = require("../config/auth.js");

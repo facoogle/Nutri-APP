@@ -1,10 +1,11 @@
 import React from 'react'
+import "./Info.css"
 
-const Info = (user) => {
-    user = user.user
+const Info = ({user}) => {
+
   return (
     <div>
-      <h2>{user.username}</h2>
+      <h2 className="usernamecss">{user.username}</h2>
     </div>
   )
 }
