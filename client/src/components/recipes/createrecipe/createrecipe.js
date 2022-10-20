@@ -26,6 +26,11 @@ export const CreateRecipe = () => {
         diets: [],
     })
 
+
+    
+   
+    const [ loading, setLoading ] = useState(false)
+
     const [error, setError] = useState({})
     const validate = (input) => {
         let error = {}
@@ -99,6 +104,29 @@ export const CreateRecipe = () => {
         }))
     }
 
+
+    const uploadImage = async (e) => {
+      
+        const files = e.target.files;
+        const data = new FormData();
+        data.append("file", files[0])
+        data.append("upload_preset", "images");
+        setLoading(true)
+        const res = await fetch(
+          "https://api.cloudinary.com/v1_1/dq4zroj42/image/upload",
+          {
+            method: "POST",
+            body: data,
+          }
+        )
+        const file = await res.json();
+        
+        
+        input.image = file.secure_url
+        
+        setLoading(false)
+        
+      }
     // const filterDiets = (e) => {
     //     let newDiets = input.diets.filter(i => i !== e.target.value)
     //     setInput({
@@ -166,12 +194,7 @@ export const CreateRecipe = () => {
                 </div>
         </p>
 
-        <p>
-                <div className='imgCreate'>
-                    <label>Image: </label>
-                    <input autoComplete="off" type="text" name="image" placeholder="Copy/Paste your image URL" value={input.image} onChange={(e) => handlleChange(e)}></input>
-                </div>
-        </p>
+        
 
         <p>
                 <div className='summary'>
@@ -186,10 +209,20 @@ export const CreateRecipe = () => {
         {console.log(error, 'error')}
                 <button className='btn1' type="submit" disabled={!input.name || Object.keys(error).length > 0}>Create</button>
         
+        <p >
+                <div className='imgCreate3'>
+                    <label>Image: </label>
+                    <input className='upfiled' type="file" name="file" placeholeder="Profile Picture" onChange={uploadImage} ></input>
+                    {loading ? (<h3>Loading picture...</h3>) : (<img className="recipesimage"src={input.image} />)}
+                    
+                </div>
+        </p>
 
         <p class="input-file-wrapper">
             <img className="image1"src={subimg1} alt="img" width="500" height="350"/>
         </p>
+
+
 
         </form>
         </div>
