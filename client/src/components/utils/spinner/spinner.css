@@ -9,9 +9,8 @@
 
   .spinnerContainer {
     position: absolute;
-    padding-bottom: 120px;
-    width: 100vw;
-    height: 60vh;
+    width: 100%;
+    height: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
