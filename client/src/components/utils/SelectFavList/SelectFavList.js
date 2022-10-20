@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addFavorite, getLists } from '../../../redux/actions/useractions'
 import './SelectFavList.css'
+import swal from 'sweetalert';
 
 const SelectFavList = ({recipeId}) => {
     const dispatch = useDispatch()
@@ -15,7 +16,7 @@ const SelectFavList = ({recipeId}) => {
 
   const handleCheck = (event) => {
     if (event.target.checked) {
-      alert('add to favorite list?')
+      swal('add to favorite list?')
        dispatch(addFavorite(event.target.value, recipeId))
         // if(!event.target.checked){
 
