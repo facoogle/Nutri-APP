@@ -12,7 +12,7 @@
 
 .wrapper1 {
     border-radius: 4px;
-    height: 900px;
+    height: 1200px;
   max-width: 1800px;
   margin: 0 auto;
   padding: 1em;
@@ -74,7 +74,7 @@ textarea {
     color: black;
     font-size: 20px;
     font-weight: 500;
-    background: rgb(129, 226, 129);
+    background: rgb(58, 212, 58);
     width: 91%;
     height: 90%;
     border: 0;
@@ -83,8 +83,8 @@ textarea {
 
 
 .formConteiner button:hover, .formConteiner button:focus {
-  background: green;
-    opacity: 30%;
+  transition: 150ms;
+  background: rgb(129, 226, 129);
 }
 
 .formConteiner form {
@@ -112,13 +112,12 @@ textarea {
 }
 
 
-
 .imgCreate2 h3{
   min-width: 200px;
   max-height: 200px;
 }
 .recipesimage{
-
+  margin-top: 50px;
   min-width: 200px;
   max-height: 200px;
 }

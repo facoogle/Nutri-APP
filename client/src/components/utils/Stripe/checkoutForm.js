@@ -66,14 +66,15 @@ export function PaymentForm() {
       const data = await response.json();
       // const datae = JSON.parse(data)
 
-      // console.log('ESTIIIII', data.respuesta)
+      //  console.log('ESTIIIII', data.respuesta)
       const confirm = await stripe.confirmCardPayment(data.respuesta.clientSecret);
-      console.log('estoo',confirm)
+      // console.log('estoo',confirm)
       if (confirm.error) return alert("Payment unsuccessful!");
       if (confirm) setLoader(true)
+      sessionStorage.setItem('user', JSON.stringify(data.respuesta.user))
+      sessionStorage.setItem('token', JSON.stringify(data.respuesta.token))
       swal("Payment Successful! Subscription active.").then(navigate2('/home'))
       
-
     } catch (err) {
       // console.error(err);
       swal("Payment failed! Please checkout the given information", `Error message: ${err.message}`  );

@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { User, Payment } = require("../../db.js");
-const { paymentNotification } = require('./notifications/notifications')
 const { HOST_EMAIL, PORT_EMAIL, EMAIL, EMAIL_PASS, DB_HOST, DB_PORT } = process.env;
+const { paymentNotification } = require('./notifications/notifications')
 const jwt = require("jsonwebtoken");
 const authConfig = require("../config/auth.js");
 const Stripe = require('stripe')
@@ -49,6 +49,9 @@ const changeToPremium = async (userEmail, userName, paymentMethod) =>{
     });
     // console.log('ESTOOO',subscription)
     const user = await User.findOne({where:{email: userEmail}})
+    const newToken = jwt.sign({ user: user }, authConfig.secret, {
+      expiresIn: authConfig.expires,
+    });
     // console.log('sos vos?¡',user)
     const factura = await Payment.create({
       paymenthID: subscription.id,
@@ -57,6 +60,10 @@ const changeToPremium = async (userEmail, userName, paymentMethod) =>{
     //console.log('facturaa',factura)
     await user.addPayment(factura)
     user.update({ premium: true })
+    user.update({ logged: true });
+          setTimeout(function () {
+            user.update({ logged: false });
+          }, 5000);
 
     // console.log(subscription.latest_invoice.invoice_pdf)
     const recibo = subscription.latest_invoice.invoice_pdf
@@ -67,7 +74,9 @@ const changeToPremium = async (userEmail, userName, paymentMethod) =>{
     return {
       message: 'Subscription successfully initiated',
       clientSecret: subscription.latest_invoice.payment_intent.client_secret,
-      subscriptionId: subscription.id
+      subscriptionId: subscription.id,
+      token: newToken,
+      user: user.dataValues,
     }
 
     } catch(error) {
