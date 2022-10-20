@@ -5,7 +5,7 @@ const authConfig = require('../config/auth.js')
 const {bannedUserNotification} = require('./notifications/notifications')
 
 const adminSingIn = async (email, username, password) =>{
-
+    
     try {
         let passwordCryp = bcrypt.hashSync(password, Number.parseInt(authConfig.rounds))
 

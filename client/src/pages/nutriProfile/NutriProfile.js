@@ -16,6 +16,22 @@ const NutriProfile = () => {
     dispatch(getInfoNutri(id))
     dispatch(getRecipesNutri(id))
   }, [])
+
+
+  useEffect(() => {
+    const script = document.createElement('script');
+  
+    script.src = "https://code.tidio.co/m8avhzvoxmrmqyx5psxszajteqygq6kc.js";
+    script.async = true;
+  
+    document.body.appendChild(script);
+  
+    return () => {
+      document.body.removeChild(script);
+    }
+  }, []);
+
+  
     return (
     <div>
       <NavBar />
