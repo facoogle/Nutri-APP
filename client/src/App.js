@@ -43,7 +43,7 @@ function App() {
         <Route exact path="/suscription" element={<Payment/>}/> 
       </Route>
       <Route exact path="/detail/:id" element={<RecipeDetail/>} />
-      <Route exact path="/nutritionist/:id" element={<ProtectedRoute isAllowed={!!user && (!!user.premium ||!!user.nutricionist || !!user.admin) }>
+      <Route exact path="/nutricionist/:id" element={<ProtectedRoute isAllowed={!!user && (!!user.premium ||!!user.nutricionist || !!user.admin) }>
           <NutriProfile />
         </ProtectedRoute>} />
       <Route exact path="/createrecipe" element={

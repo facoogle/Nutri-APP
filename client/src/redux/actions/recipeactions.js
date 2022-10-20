@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {getAllRecipes, orderByRating, getRecipesByName,
-    getRecipeById,createRecipe, filterByDiet, getDiets_Recipe, getAllPost, getRanking
+    getRecipeById,createRecipe, filterByDiet, getDiets_Recipe, getAllPost, getRanking, getAuthor
 } from '../recipeSlice'
 import { getNutri, getNutriRecipes } from '../userSlice'
 
@@ -28,7 +28,7 @@ export const orderForRating = (payload)=> async (dispatch)=>{
     try {
         dispatch(orderByRating(payload))
     } catch (error) {
-        
+        console.log(error)
     }
 
 }
@@ -41,7 +41,22 @@ export const getRecipesName = (payload)=> async (dispatch)=>{
         let res = await axios.get(`${url}/recipes?name=${payload}`)
         dispatch(getRecipesByName(res.data.length?res.data:nodata))
     } catch (error) {
-        
+        console.log(error)
+    }
+}
+export const getAuthorName = (authorId)=> async (dispatch)=>{
+    try {
+        let token = JSON.parse(sessionStorage.getItem('token'))
+        let res = await axios.get(`${url}/recipe/author/${authorId}`,{
+            headers:{
+                'Authorization': `Bearer ${token}`,
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        dispatch(getAuthor(res.data))
+    } catch (error) {
+        console.log(error)
     }
 }
 
