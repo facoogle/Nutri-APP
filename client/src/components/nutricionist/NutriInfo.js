@@ -1,4 +1,5 @@
 import React from 'react'
+import NutriPFP from './n.png' 
 
 
 const NutriInfo = ({nutri}) => {
@@ -6,7 +7,7 @@ const NutriInfo = ({nutri}) => {
     <div key={nutri.id} className='nutriInfo'>
       <h3>{nutri.username}</h3>
       <h4>{nutri.email}</h4>
-      <img src={nutri.image} className='imagenNutri'></img>
+      <img src={NutriPFP} className='imagenNutri'></img>
     </div>
   )
 }
