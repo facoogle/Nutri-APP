@@ -75,11 +75,11 @@ URL_FRONT=localhost:3000  your Host + port
 
 # Thank you for visiting us, for more information contact the developers. 
 Linkedin:
-https://www.linkedin.com/in/facundo-moreyra/
-https://www.linkedin.com/in/duván-andrés-merchán-buitrago-853100233/
-https://www.linkedin.com/in/pedro-ezequiel-caloiero-780b89207/
-https://www.linkedin.com/in/leandro-espinasse/
-https://www.linkedin.com/in/juan-emanuel-martinez-pucheta/
+* https://www.linkedin.com/in/facundo-moreyra/
+* https://www.linkedin.com/in/duván-andrés-merchán-buitrago-853100233/
+* https://www.linkedin.com/in/pedro-ezequiel-caloiero-780b89207/
+* https://www.linkedin.com/in/leandro-espinasse/
+* https://www.linkedin.com/in/juan-emanuel-martinez-pucheta/
 
 
 
