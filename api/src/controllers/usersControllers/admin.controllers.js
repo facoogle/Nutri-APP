@@ -7,6 +7,10 @@ const {bannedUserNotification} = require('./notifications/notifications')
 const adminSingIn = async (email, username, password) =>{
     
     try {
+        let nameUser = await User.findOne({where:{email:email}})
+        if(nameUser){
+            return'user alredy exist'
+        }else{
         let passwordCryp = bcrypt.hashSync(password, Number.parseInt(authConfig.rounds))
 
         let newAdmin = await User.create({
@@ -21,7 +25,7 @@ const adminSingIn = async (email, username, password) =>{
             return({
                 user:newAdmin,
                 token:token
-            })
+            })}
     } catch (error) {
         console.log(error)
     }}
