@@ -123,7 +123,7 @@ const UserProfile = () => {
     }
 
 
-    
+    console.log(user, "hola soy user xD")
 
 return (
     <div className='profileCon'>
@@ -218,70 +218,6 @@ return (
      <div className='profileprincipal'>
       
     
-
-     
-    
-
-    {/* { !profile.length?<div className='profiledetalles'>
-    <h2>User Information:</h2>
-              <h3>Peso: 0 Kg</h3>
-              <h3>Height: 0 Cm</h3>
-              <h3>IBM: 0</h3>
-              
-    <div className="userimage">
-        {loading ? (<h3>Loading picture...</h3>) : (<div><img className="userimage1"src={image}/></div>)}
-          <div>
-            <button  className='saveimageprofile'  onClick={postImg}>Save Image</button>
-          </div>
-            <div className='upload1'>
-            <input className='upfiled' type="file" name="file" placeholeder="Profile Picture" onChange={uploadImage}></input>
-          </div>
-    </div>
-          
-          </div>:
-        profile.map((el) => {
-            
-          return (
-            <div className="userimage">
-
-        {loading ? (<h3>Loading picture...</h3>) : (<img className="userimage1"src={el.imgperfil} />)}
-
-            
-          </div>
-          )  
-        })}
-
-
-    <div className='userinformation'>
-     { !profile.length?<div className='profiledetalles'>
-              <h2>User Information:</h2>
-              <h3>Peso: 0 Kg</h3>
-              <h3>Height: 0 Cm</h3>
-              <h3>IBM: 0</h3>
-
-              <button className="modifyibmbtn">
-                <a className="btn btn-primary" href='/calculatorimc'>Modify your IBM</a>
-              </button>
-          
-          </div>:
-        profile.map((el) => {
-            
-          return (
-            <div className='userinformation'>
-            <div className='profiledetalles'>
-              <h2>User Information:</h2>
-              <h3>Peso: {el.peso} Kg</h3>
-              <h3>Height: {el.altura} Cm</h3>
-              <h3>IBM: {el.imc}</h3>   
-
-                <button className="modifyibmbtn">
-                  <a className="btn btn-primary" href='/calculatorimc'>Modify your IBM</a>
-                </button> 
-            </div>
-            </div>
-          )  
-        })}
-     </div> */}
 
 
      

@@ -103,6 +103,8 @@ try {
       username:nutri.dataValues.username,
       email:nutri.dataValues.email,
       id:nutri.dataValues.id,
+      admin:nutri.dataValues.admin,
+      premium:nutri.dataValues.premium,
       image:nutriProfile?nutriProfile.dataValues.imgperfil:"https://d500.epimg.net/cincodias/imagenes/2016/07/04/lifestyle/1467646262_522853_1467646344_noticia_normal.jpg"}
   return nu
 } catch (error) {
