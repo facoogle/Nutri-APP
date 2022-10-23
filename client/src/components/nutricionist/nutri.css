@@ -11,3 +11,8 @@
     justify-content: space-around;
     width: -webkit-fill-available;
 }
+
+.buttonAdmin{
+    width: 100px;
+    height: 40px;
+}
